@@ -1,0 +1,5 @@
+{
+	"ServerIP":"192.168.1.83",
+	"ServerPort":19000,
+	"LogFile":"./my.log"
+}
