@@ -24,8 +24,8 @@ type ProtoSession struct {
 	Sock    *net.TCPConn
 	IBuf    *NetBuf
 	//OBuf    *NetBuf	//输出改用chan
-	OBuf  chan pbMsgForChan
-	Running bool
+	OBuf    chan pbMsgForChan
+	Quit 	chan bool
 	Addr    string
 }
 
@@ -44,8 +44,8 @@ func (this *ProtoSession) Init(sock *net.TCPConn) {
 	//this.OBuf = new(NetBuf)
 	//this.OBuf.InitSelf(BufLenMax)
 
-	this.OBuf = make(chan pbMsgForChan, 100)	//允许缓存100个消息
-	this.Running = false
+	this.OBuf = make(chan pbMsgForChan, 100) //允许缓存100个消息
+	this.Quit = make(chan bool)
 }
 
 
@@ -63,11 +63,9 @@ FOR:
 		case rsp := <-this.OBuf:
 			//Logger.Println("Get out msg")
 			this.writePBMsgToSocket(&rsp)
-		default:
-			if !this.Running {
-				break FOR
-			}
-			runtime.Gosched()
+		case <-this.Quit:
+			break FOR
+			//runtime.Gosched() //GOSCHED太快
 		}
 
 	}
@@ -78,7 +76,7 @@ func (this *ProtoSession) Run() {
 		Logger.Println(this.Addr, "ProtoSession Run Exit")
 	}()
 
-	this.Running = true
+	//this.Running = true
 
 	go this.listenOutData()
 	//go this.SendToSock()

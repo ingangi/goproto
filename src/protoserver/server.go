@@ -92,7 +92,7 @@ func (this *ProtoServer) HandleConn(s *ProtoSession) {
 		Logger.Println("close conn:", s.Sock.RemoteAddr().String())
 		s.Sock.Close()
 		delete(this.Sessions, s.Sock.RemoteAddr().String())
-		s.Running = false
+		s.Quit <- true
 	}()
 
 	s.Run()

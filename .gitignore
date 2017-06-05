@@ -45,3 +45,10 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+.idea/encodings.xml
+.idea/libraries/GOPATH__goproto_.xml
+.idea/vcs.xml
+.idea/libraries/Go_SDK.xml
+.idea/modules.xml
+.idea/goproto.iml
+.idea/workspace.xml
