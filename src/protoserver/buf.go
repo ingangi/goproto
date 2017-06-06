@@ -11,6 +11,7 @@ import (
 	"sync"
 	. "typedefs"
 	"protomsg"
+	"time"
 )
 
 type NetBuf struct {
@@ -27,7 +28,7 @@ func (this *NetBuf) Empty() (isempty bool) {
 }
 
 const (
-	BufLenMax    = 8192
+	BufLenMax = 512000
 )
 
 func (this *NetBuf) InitSelf(lenMax int) {
@@ -38,9 +39,8 @@ func (this *NetBuf) InitSelf(lenMax int) {
 }
 
 func (this *NetBuf) WritableBytes() int {
-	return this.EndIndex - this.WOffset
+	return this.EndIndex - this.WOffset + 1
 }
-
 
 ////////////////////////////////////////////////////////////////////////////
 //////////////////////  funcs for input buffer ///////////////////////////
@@ -50,6 +50,11 @@ func (this *NetBuf) ReadableBytes() int {
 }
 
 func (this *NetBuf) ReadFd(sock *net.TCPConn) (n int, err error) {
+	if this.WritableBytes() < 1 {
+		Logger.Println("inBuf is full, will not read data!!")
+		time.Sleep(10 * time.Millisecond)
+		return
+	}
 	n, err = sock.Read(this.Buf[this.WOffset:])
 	this.WOffset += n
 	if err != nil {
@@ -64,6 +69,7 @@ func (this *NetBuf) Parse() (msg *protomsg.PBFrame) {
 	//Logger.Println("before parse buf: ROffset =", this.ROffset, "WOffset =", this.WOffset, "EndIndex =", this.EndIndex)
 	msg = nil
 
+	movetohead := false
 	if this.ReadableBytes() >= protomsg.PBHeadLen {
 		FrameLen := binary.BigEndian.Uint32(this.Buf[this.ROffset:this.ROffset+4])
 		if FrameLen < protomsg.PBHeadLen || FrameLen > protomsg.PBFrameMaxLen {
@@ -111,10 +117,26 @@ func (this *NetBuf) Parse() (msg *protomsg.PBFrame) {
 				this.ROffset += BodyLen
 				Logger.Println("get a new msg, head info: ", msg.Head)
 			}
+		} else {
+			// 当缓存数据不够一帧时， 要检查缓存是否已满， 满了的话把数据拷贝到头部去
+			if this.ROffset + int(FrameLen) > this.EndIndex {
+				movetohead = true
+			}
 
 		}
+	} else {
+		// 当缓存数据不够一帧时， 要检查缓存是否已满， 满了的话把数据拷贝到头部去
+		if this.ROffset + protomsg.PBHeadLen > this.EndIndex {
+			movetohead = true
+		}
+
 	}
 
+	if movetohead {
+		Logger.Println("inbuf is full, move data to head")
+		this.WOffset = copy(this.Buf, this.Buf[this.ROffset:])
+		this.ROffset = 0
+	}
 
 	if this.ROffset >= this.WOffset { //reset buf
 		this.ROffset = 0
