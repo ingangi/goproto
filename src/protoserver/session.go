@@ -6,23 +6,24 @@ author: chh
 package protoserver
 
 import (
+	"prototcp/protomsg"
+	. "prototcp/typedefs"
 	"net"
-	. "typedefs"
-	"runtime"
-	"protomsg"
-	"github.com/golang/protobuf/proto"
 	"reflect"
+	"runtime"
+
+	"github.com/golang/protobuf/proto"
 )
 
 type pbMsgForChan struct {
 	pbmsg interface{}
-	uid uint32
-	sn uint32
+	uid   uint32
+	sn    uint32
 }
 
 type ProtoSession struct {
-	Sock    *net.TCPConn
-	IBuf    *NetBuf
+	Sock *net.TCPConn
+	IBuf *NetBuf
 	//OBuf    *NetBuf	//输出改用chan
 	OBuf    chan pbMsgForChan
 	Quit 	chan bool
@@ -47,7 +48,6 @@ func (this *ProtoSession) Init(sock *net.TCPConn) {
 	this.OBuf = make(chan pbMsgForChan, 100) //允许缓存100个消息
 	this.Quit = make(chan bool)
 }
-
 
 // 读OBuf chan, 写到socket
 func (this *ProtoSession) listenOutData() {
@@ -160,7 +160,7 @@ func (this *ProtoSession) writePBMsgToSocket(pomsg *pbMsgForChan) (n int, e erro
 			"writePBMsgToSocket faild:",
 			n,
 			"bytes written,",
-			datalen - n,
+			datalen-n,
 			"bytes left, try again")
 
 		n2, _ := this.Sock.Write(data[n:])
@@ -205,5 +205,3 @@ func (this *ProtoSession) SendPBMsg(pbmsg interface{}, uid uint32, sn uint32) {
 //
 //	}
 //}
-
-

@@ -6,11 +6,11 @@ author: chh
 package protoserver
 
 import (
+	"prototcp/protomsg"
+	. "prototcp/typedefs"
 	"encoding/binary"
 	"net"
 	"sync"
-	. "typedefs"
-	"protomsg"
 	"time"
 )
 
@@ -71,7 +71,7 @@ func (this *NetBuf) Parse() (msg *protomsg.PBFrame) {
 
 	movetohead := false
 	if this.ReadableBytes() >= protomsg.PBHeadLen {
-		FrameLen := binary.BigEndian.Uint32(this.Buf[this.ROffset:this.ROffset+4])
+		FrameLen := binary.BigEndian.Uint32(this.Buf[this.ROffset : this.ROffset+4])
 		if FrameLen < protomsg.PBHeadLen || FrameLen > protomsg.PBFrameMaxLen {
 			// 数据异常，清空
 			Logger.Println("buf data error, reset buf, len = ", FrameLen)
@@ -83,7 +83,7 @@ func (this *NetBuf) Parse() (msg *protomsg.PBFrame) {
 		if this.ReadableBytes() >= int(FrameLen) {
 			// 校验,字节累加和等于0
 			var checkcode uint8
-			for checkOffset := uint32(0); checkOffset<FrameLen;  checkOffset++{
+			for checkOffset := uint32(0); checkOffset < FrameLen; checkOffset++ {
 				checkcode = checkcode + this.Buf[uint32(this.ROffset)+checkOffset]
 			}
 
@@ -100,15 +100,14 @@ func (this *NetBuf) Parse() (msg *protomsg.PBFrame) {
 				this.ROffset++
 				msg.Head.CheckCode = uint8(this.Buf[this.ROffset])
 				this.ROffset++
-				msg.Head.MainID = binary.BigEndian.Uint16(this.Buf[this.ROffset:this.ROffset+2])
+				msg.Head.MainID = binary.BigEndian.Uint16(this.Buf[this.ROffset : this.ROffset+2])
 				this.ROffset += 2
-				msg.Head.SubID = binary.BigEndian.Uint16(this.Buf[this.ROffset:this.ROffset+2])
+				msg.Head.SubID = binary.BigEndian.Uint16(this.Buf[this.ROffset : this.ROffset+2])
 				this.ROffset += 2
-				msg.Head.SN = binary.BigEndian.Uint32(this.Buf[this.ROffset:this.ROffset+4])
+				msg.Head.SN = binary.BigEndian.Uint32(this.Buf[this.ROffset : this.ROffset+4])
 				this.ROffset += 4
-				msg.Head.UID = binary.BigEndian.Uint32(this.Buf[this.ROffset:this.ROffset+4])
+				msg.Head.UID = binary.BigEndian.Uint32(this.Buf[this.ROffset : this.ROffset+4])
 				this.ROffset += 4
-
 
 				// 拷贝数据
 				BodyLen := int(FrameLen - protomsg.PBHeadLen)
