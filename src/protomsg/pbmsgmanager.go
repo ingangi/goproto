@@ -1,14 +1,14 @@
 /*
 des   : PB消息工厂，以及回调管理
 create:
-author: chh
+author: ingangi
 */
 package protomsg
 
 import (
-	. "prototcp/typedefs"
 	"encoding/binary"
 	"errors"
+	. "prototcp/typedefs"
 	"reflect"
 	"sync"
 

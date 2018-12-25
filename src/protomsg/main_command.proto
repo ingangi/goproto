@@ -23,7 +23,7 @@ enum PB_MAIN_ID
 	//add by yuyifei 为用户关系定的主ID
 	PB_MAIN_RELATIONSHIP=1002;
 
-	// add by chenhuahui 直播消息定义
+	// add by ingangi 直播消息定义
 	PB_MAIN_LIVE = 1003;
 	
 	
@@ -33,7 +33,7 @@ enum PB_MAIN_ID
 	// add by caiy
 	PB_MAIN_FILTER = 1005;
 	
-	// add by chenhuahui
+	// add by ingangi
 	PB_MAIN_VIDEO_CHAT = 1006;
 
 	// 流水 uc->ftc
@@ -47,7 +47,7 @@ enum PB_MAIN_ID
 	//add by yuyifei 与JAVA之间的大类
 	PB_MAIN_PUNISHMENT=1010;
 	
-	// add by chenhuahui 夺宝消息
+	// add by ingangi 夺宝消息
 	PB_MAIN_LUCKY=1011;
 	
 
@@ -57,7 +57,7 @@ enum PB_MAIN_ID
 	// add by zengsibo 用户限制类
 	PB_MAIN_RESTRICTION=1013;
 	
-	// add by chenhuahui 直播通知IM->java
+	// add by ingangi 直播通知IM->java
 	PB_MAIN_LIVE_WEB_NOTIFY = 1014;
 
 	//add by yuyifei JAVA消息通知大类
@@ -66,7 +66,7 @@ enum PB_MAIN_ID
 	// add by caiyu  流水相关业务
 	PB_MAIN_FLOW_RELATION = 1016;
 	
-	// add by chenhuahui  用户状态业务
+	// add by ingangi  用户状态业务
 	PB_MAIN_USER_STATE = 1017;
 	
 	// ...

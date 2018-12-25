@@ -1,7 +1,7 @@
 /*
 des   : 一个连接
 create:
-author: chh
+author: ingangi
 */
 package protoserver
 

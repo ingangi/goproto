@@ -26,13 +26,13 @@ const (
 	PB_MAIN_ID_PB_MAIN_BUSINESS_BEGIN PB_MAIN_ID = 1001
 	// add by yuyifei 为用户关系定的主ID
 	PB_MAIN_ID_PB_MAIN_RELATIONSHIP PB_MAIN_ID = 1002
-	// add by chenhuahui 直播消息定义
+	// add by ingangi 直播消息定义
 	PB_MAIN_ID_PB_MAIN_LIVE PB_MAIN_ID = 1003
 	// add by zengsibo 用户模块
 	PB_MAIN_ID_PB_MAIN_USERMODULAR PB_MAIN_ID = 1004
 	// add by caiy
 	PB_MAIN_ID_PB_MAIN_FILTER PB_MAIN_ID = 1005
-	// add by chenhuahui
+	// add by ingangi
 	PB_MAIN_ID_PB_MAIN_VIDEO_CHAT PB_MAIN_ID = 1006
 	// 流水 uc->ftc
 	PB_MAIN_ID_PB_MAIN_FLOW PB_MAIN_ID = 1007
@@ -42,19 +42,19 @@ const (
 	PB_MAIN_ID_PB_MAIN_CONFIGCHANGE PB_MAIN_ID = 1009
 	// add by yuyifei 与JAVA之间的大类
 	PB_MAIN_ID_PB_MAIN_PUNISHMENT PB_MAIN_ID = 1010
-	// add by chenhuahui 夺宝消息
+	// add by ingangi 夺宝消息
 	PB_MAIN_ID_PB_MAIN_LUCKY PB_MAIN_ID = 1011
 	// add by caiyu
 	PB_MAIN_ID_PB_MAIN_FORTUNE PB_MAIN_ID = 1012
 	// add by zengsibo 用户限制类
 	PB_MAIN_ID_PB_MAIN_RESTRICTION PB_MAIN_ID = 1013
-	// add by chenhuahui 直播通知IM->java
+	// add by ingangi 直播通知IM->java
 	PB_MAIN_ID_PB_MAIN_LIVE_WEB_NOTIFY PB_MAIN_ID = 1014
 	// add by yuyifei JAVA消息通知大类
 	PB_MAIN_ID_PB_MAIN_MSG_NOTIFY PB_MAIN_ID = 1015
 	// add by caiyu  流水相关业务
 	PB_MAIN_ID_PB_MAIN_FLOW_RELATION PB_MAIN_ID = 1016
-	// add by chenhuahui  用户状态业务
+	// add by ingangi  用户状态业务
 	PB_MAIN_ID_PB_MAIN_USER_STATE PB_MAIN_ID = 1017
 	// ...
 	PB_MAIN_ID_PB_MAIN_WEBSOCKET    PB_MAIN_ID = 1500

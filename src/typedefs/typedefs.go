@@ -1,7 +1,7 @@
 /*
 des   : 全局类型定义
 create:
-author: chh
+author: ingangi
 */
 package typedefs
 
